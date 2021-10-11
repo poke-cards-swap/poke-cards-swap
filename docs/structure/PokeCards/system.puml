@@ -1,0 +1,35 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(admin, "Administrator")
+
+Person_Ext(buyer, "Buyer", "Buy cards")
+Person_Ext(seller, "Seller", "Sell cards")
+
+System(pokemoncards, "Poke Cards Swap", "Pokomon cards auctions proxy")
+
+System_Ext(cognito, "Amazon Cognito", "User management")
+System_Ext(paypal, "PayPal", "Payment management")
+
+System_Boundary(pokemoncards, "Poke Cards Swap") {
+    Container(cards, "Pokemon Cards", "TBA", "List with pokemon cards managed by admin")
+    Container(cardsdb, "Pokemon Cards DB", "PostgreSQL", "Stores Pokemon cards")
+
+    Container(auctions, "Auctions management", "TBA", "Contains everything related to the auctions")
+    Container(auctionsdb, "Auctions DB", "PostgreSQL", "Stores auctions data")
+
+    Container(users, "Users Management", "TBA", "Users microservice to connect with Cognito")
+
+    Container(payments, "Payments Management", "TBA", "Payments microservice with PayPal integration")
+    Container(paymentsdb, "Payments DB", "PostgreSQL", "Stores payments data")
+
+    Container(kafka, "Message Broker", "Apache Kafka", "Notifications between microservices")
+
+    Container(expressgateway, "API Gateway", "Express Gateway", "Proxy between microservices and frontend")
+
+    Container(adminpanel, "Admin Panel", "TBA", "Admin panel for managing Pokemon cards and auctions")
+    Container(cardsfrontend, "Main frontend APP", "TBA", "Main frontend application for buyers and sellers")
+}
+@enduml
