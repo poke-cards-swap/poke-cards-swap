@@ -1,0 +1,66 @@
+@startuml
+!include https://raw.githubusercontent.com/adrianvlupu/C4-PlantUML/latest/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(admin, "Administrator")
+
+Person_Ext(buyer, "Buyer", "Buy cards")
+Person_Ext(seller, "Seller", "Sell cards")
+
+System(pokemoncards, "Poke Cards Swap", "Pokomon cards auctions proxy")
+
+System_Ext(cognito, "Amazon Cognito", "User management")
+System_Ext(paypal, "PayPal", "Payment management")
+
+System_Boundary(pokemoncards, "Poke Cards Swap") {
+    Container(cards, "Pokemon Cards", "Fast API", "List with pokemon cards managed by admin")
+    Container(cardsdb, "Pokemon Cards DB", "PostgreSQL", "Stores Pokemon cards")
+
+    Container(auctions, "Auctions", "Fast API", "Contains everything related to the auctions")
+    Container(auctionsdb, "Auctions DB", "PostgreSQL", "Stores auctions data")
+
+    Container(users, "Users", "Fast API", "Users microservice to connect with Cognito")
+
+    Container(payments, "Payments", "Fast API", "Payments microservice with PayPal integration")
+    Container(paymentsdb, "Payments DB", "PostgreSQL", "Stores payments data")
+
+    Container(messagebroker, "Message Broker", "TBA", "Notifications between microservices")
+
+    Container(adminpanel, "Admin Panel", "Svelte", "Admin panel for managing Pokemon cards and auctions")
+    Container(cardsfrontend, "Main frontend APP", "Svelte", "Main frontend application for buyers and sellers")
+
+    Container(expressgateway, "API Gateway", "Express Gateway", "Proxy between microservices and frontend")
+
+    Rel(adminpanel, expressgateway, "Passes requests", "HTTPS")
+    Rel(cardsfrontend, expressgateway, "Passes requests", "HTTPS")
+
+    Rel(expressgateway, cards, "Calls API", "HTTPS")
+    Rel(expressgateway, auctions, "Calls API", "HTTPS")
+    Rel(expressgateway, payments, "Calls API", "HTTPS")
+    Rel(expressgateway, users, "Calls API", "HTTPS")
+
+    Rel(cards, cardsdb, "Stores data")
+    Rel(auctions, auctionsdb, "Stores data")
+    Rel(payments, paymentsdb, "Stores data")
+
+    Rel(cards, messagebroker, "Notifies microservices")
+    Rel(auctions, messagebroker, "Notifies microservices")
+    Rel(payments, messagebroker, "Notifies microservices")
+    Rel(users, messagebroker, "Notifies microservices")
+}
+
+Rel(payments, paypal, "Performs payment", "PayPal API")
+
+Rel(admin, adminpanel, "Manages auctions")
+
+Rel(buyer, cardsfrontend, "Buys cards")
+Rel(seller, cardsfrontend, "Sell cards")
+
+Rel(buyer, cognito, "Authenticates")
+Rel(admin, cognito, "Authenticates")
+Rel(seller, cognito, "Authenticates")
+
+Rel(users, cognito, "Authorizes users")
+
+@enduml
