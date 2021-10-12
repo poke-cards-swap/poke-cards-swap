@@ -14,16 +14,16 @@ System_Ext(cognito, "Amazon Cognito", "User management")
 System_Ext(paypal, "PayPal", "Payment management")
 
 System_Boundary(pokemoncards, "Poke Cards Swap") {
-    Container(cards, "Pokemon Cards", "TBA", "List with pokemon cards managed by admin")
-    Container(cardsdb, "Pokemon Cards DB", "TBA", "Stores Pokemon cards")
+    Container(cards, "Pokemon Cards", "Fast API", "List with pokemon cards managed by admin")
+    Container(cardsdb, "Pokemon Cards DB", "PostgreSQL", "Stores Pokemon cards")
 
-    Container(auctions, "Auctions", "TBA", "Contains everything related to the auctions")
-    Container(auctionsdb, "Auctions DB", "TBA", "Stores auctions data")
+    Container(auctions, "Auctions", "Fast API", "Contains everything related to the auctions")
+    Container(auctionsdb, "Auctions DB", "PostgreSQL", "Stores auctions data")
 
-    Container(users, "Users", "TBA", "Users microservice to connect with Cognito")
+    Container(users, "Users", "Fast API", "Users microservice to connect with Cognito")
 
-    Container(payments, "Payments", "TBA", "Payments microservice with PayPal integration")
-    Container(paymentsdb, "Payments DB", "TBA", "Stores payments data")
+    Container(payments, "Payments", "Fast API", "Payments microservice with PayPal integration")
+    Container(paymentsdb, "Payments DB", "PostgreSQL", "Stores payments data")
 
     Container(messagebroker, "Message Broker", "TBA", "Notifications between microservices")
 
