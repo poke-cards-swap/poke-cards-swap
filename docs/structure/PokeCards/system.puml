@@ -27,8 +27,8 @@ System_Boundary(pokemoncards, "Poke Cards Swap") {
 
     Container(messagebroker, "Message Broker", "TBA", "Notifications between microservices")
 
-    Container(adminpanel, "Admin Panel", "TBA", "Admin panel for managing Pokemon cards and auctions")
-    Container(cardsfrontend, "Main frontend APP", "TBA", "Main frontend application for buyers and sellers")
+    Container(adminpanel, "Admin Panel", "Svelte", "Admin panel for managing Pokemon cards and auctions")
+    Container(cardsfrontend, "Main frontend APP", "Svelte", "Main frontend application for buyers and sellers")
 
     Container(expressgateway, "API Gateway", "Express Gateway", "Proxy between microservices and frontend")
 
